@@ -1,4 +1,4 @@
-# Smog
+# Smog#
 
 * http://github.com/ancailliau/smog
 
