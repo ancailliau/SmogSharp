@@ -29,7 +29,8 @@ namespace Smog.Physics
 	
 	/// <summary>
 	/// 	Represents a particle which is a punctual mass with a position
-	/// 	and a speed.
+	/// 	and a speed. Forces can be applied to particle. These are null by
+	/// 	default.
 	/// </summary>
 	public class Particle
 	{
@@ -39,7 +40,7 @@ namespace Smog.Physics
 		/// </summary>
 		public double X  {
 			get;
-			private set;
+			set;
 		}
 		
 		/// <summary>
@@ -47,7 +48,7 @@ namespace Smog.Physics
 		/// </summary>
 		public double Y  {
 			get;
-			private set;
+			set;
 		}
 		
 		/// <summary>
@@ -55,7 +56,7 @@ namespace Smog.Physics
 		/// </summary>
 		public double XSpeed  {
 			get;
-			private set;
+			set;
 		}
 		
 		/// <summary>
@@ -63,7 +64,23 @@ namespace Smog.Physics
 		/// </summary>
 		public double YSpeed  {
 			get;
-			private set;
+			set;
+		}
+		
+		/// <summary>
+		/// 	The force applied to the particle along the x-axis.
+		/// </summary>
+		public double XForce  {
+			get;
+			set;
+		}
+		
+		/// <summary>
+		/// 	The force applied to the particle along the y-axis.
+		/// </summary>
+		public double YForce  {
+			get;
+			set;
 		}
 		
 		/// <summary>
@@ -71,7 +88,15 @@ namespace Smog.Physics
 		/// </summary>
 		public double Mass  {
 			get;
-			private set;
+			set;
+		}
+		
+		/// <summary>
+		/// 	A tag to attach elements to the particle.
+		/// </summary>
+		public int Tag  {
+			get;
+			set;
 		}
 		
 		/// <summary>
@@ -82,6 +107,7 @@ namespace Smog.Physics
 		{
 			X = 0; Y = 0;
 			XSpeed = 0; YSpeed = 0;
+			XForce = 0; YForce = 0;
 			Mass = 1;
 		}
 
@@ -108,7 +134,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the y-coordinate
 		/// </param>
 		public Particle (double x, double y)
-			: base()
+			: this()
 		{
 			X = x;
 			Y = y;
@@ -128,7 +154,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the mass
 		/// </param>
 		public Particle (double x, double y, double mass)
-			: base(x,y)
+			: this(x, y)
 		{
 			Mass = mass;
 		}
@@ -150,7 +176,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the speed along the y-axis.
 		/// </param>
 		public Particle (double x, double y, double xSpeed, double ySpeed)
-			: base(x, y)
+			: this(x, y)
 		{
 			XSpeed = xSpeed;
 			YSpeed = ySpeed;
@@ -179,7 +205,7 @@ namespace Smog.Physics
 		/// 	particle.
 		/// </param>
 		public Particle (double x, double y, double xSpeed, double ySpeed, double mass)
-			: base(x, y, xSpeed, ySpeed)
+			: this(x, y, xSpeed, ySpeed)
 		{
 			Mass = mass;
 		}

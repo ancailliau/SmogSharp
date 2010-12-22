@@ -76,6 +76,14 @@ namespace Smog.Physics
 		}
 		
 		/// <summary>
+		/// 	A tag to attach elements to the spring.
+		/// </summary>
+		public int Tag  {
+			get;
+			set;
+		}
+		
+		/// <summary>
 		/// 	Creates a new spring between the two given particles, of
 		/// 	unitary length and strenght.
 		/// </summary>
@@ -109,7 +117,7 @@ namespace Smog.Physics
 		/// 	spring.
 		/// </param>
 		public Spring (Particle particle1, Particle particle2, double strenght)
-			: base(particle1, particle2)
+			: this(particle1, particle2)
 		{
 			this.Strenght = strenght;
 		}
@@ -133,7 +141,7 @@ namespace Smog.Physics
 		/// 	spring.
 		/// </param>
 		public Spring (Particle particle1, Particle particle2, double strenght, double length)
-			: base (particle1, particle2, strenght)
+			: this(particle1, particle2, strenght)
 		{
 			Length = length;
 			Damping = Length / 10;

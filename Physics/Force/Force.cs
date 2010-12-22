@@ -1,5 +1,5 @@
 // 
-// Layout.cs
+// Force.cs
 //  
 // Author:
 //       Antoine Cailliau <antoine.cailliau@uclouvain.be>
@@ -23,48 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using Smog.Utils;
-
-namespace Smog.Layout
+using Smog.Layout;
+namespace Smog.Physics.Force
 {
-	
-	/// <summary>
-	/// 	Represents an algorithm to draw graph
-	/// </summary>
-	public interface Layout
+	public interface Force
 	{
-	
-		/// <summary>
-		/// 	Creates a new layout for the given nodes and edges.
-		/// </summary>
-		/// <param name="nodes">
-		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
-		/// </param>
-		/// <param name="edges">
-		/// 	A <see cref="Edge[]"/> representing the edges of the graph.
-		/// </param>
-		void Layout(Node[] nodes, Edge[] edges);
-		
-		/// <summary>
-		/// 	Initializes the algorithm by setting proper value to nodes and
-		/// 	springs for the algorithm to start.
-		/// </summary>
-		void Init ();
-		
-		/// <summary>
-		/// 	Closes
-		/// 	<code>ComputeNextStep</code> can't be called afterwards.
-		/// </summary>
-		void Terminate ();
-		
-		/// <summary>
-		/// 	Computes the next step of the simulation. The method returns
-		/// 	whether there are more steps to do.
-		/// </summary>
-		bool ComputeNextStep();	
-		
+		void Apply(PhysicalLayout layout);
 	}
 }
 
