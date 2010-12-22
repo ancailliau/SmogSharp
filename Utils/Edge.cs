@@ -32,13 +32,13 @@ namespace Smog.Utils
 	/// <summary>
 	///		Represents a directed edge between two nodes
 	/// </summary>
-	public class Edge
+	public class Edge<S> where S: Node
 	{
 		
 		/// <summary>
 		/// 	The head of the edge
 		/// </summary>
-		public Node Head  {
+		public S Head  {
 			get;
 			private set;
 		}
@@ -46,15 +46,17 @@ namespace Smog.Utils
 		/// <summary>
 		/// 	The tail of the edge.
 		/// </summary>
-		public Node Tail  {
+		public S Tail  {
 			get;
 			private set;
 		}
-			
 		
-		public Edge ()
+		public Edge (S head, S tail)
 		{
+			this.Head = head;
+			this.Tail = tail;
 		}
+		
 	}
 }
 

@@ -32,7 +32,7 @@ namespace Smog.Physics
 	/// 	and a speed. Forces can be applied to particle. These are null by
 	/// 	default.
 	/// </summary>
-	public class Particle
+	public class Particle<S>
 	{
 		
 		/// <summary>
@@ -94,7 +94,7 @@ namespace Smog.Physics
 		/// <summary>
 		/// 	A tag to attach elements to the particle.
 		/// </summary>
-		public int Tag  {
+		public S Value  {
 			get;
 			set;
 		}

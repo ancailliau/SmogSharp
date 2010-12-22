@@ -32,13 +32,13 @@ namespace Smog.Physics
 	/// 	and its natural length. An other important characteristics is the
 	/// 	damping factor of the spring.
 	/// </summary>
-	public class Spring
+	public class Spring<S, T>
 	{
 		
 		/// <summary>
 		/// 	One of the particle attached to the spring.
 		/// </summary>
-		public Particle Particle1  {
+		public Particle<S> Particle1  {
 			get;
 			private set;
 		}
@@ -46,7 +46,7 @@ namespace Smog.Physics
 		/// <summary>
 		/// 	The other particle attached to the spring.
 		/// </summary>
-		public Particle Particle2  {
+		public Particle<S> Particle2  {
 			get;
 			private set;
 		}
@@ -78,7 +78,7 @@ namespace Smog.Physics
 		/// <summary>
 		/// 	A tag to attach elements to the spring.
 		/// </summary>
-		public int Tag  {
+		public T Value  {
 			get;
 			set;
 		}
@@ -93,7 +93,7 @@ namespace Smog.Physics
 		/// <param name="p2">
 		/// A <see cref="Particle"/> representing the other particle.
 		/// </param>
-		public Spring (Particle p1, Particle p2)
+		public Spring (Particle<S> p1, Particle<S> p2)
 		{
 			Particle1 = p1;
 			Particle2 = p2;
@@ -116,7 +116,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the strenght of the
 		/// 	spring.
 		/// </param>
-		public Spring (Particle particle1, Particle particle2, double strenght)
+		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght)
 			: this(particle1, particle2)
 		{
 			this.Strenght = strenght;
@@ -140,7 +140,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the length of the
 		/// 	spring.
 		/// </param>
-		public Spring (Particle particle1, Particle particle2, double strenght, double length)
+		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght, double length)
 			: this(particle1, particle2, strenght)
 		{
 			Length = length;
@@ -169,7 +169,7 @@ namespace Smog.Physics
 		/// 	A <see cref="System.Double"/> representing the damping factor of
 		/// 	the spring.
 		/// </param>
-		public Spring (Particle particle1, Particle particle2, double strenght, double length, double damping)
+		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght, double length, double damping)
 		{
 			this.Particle1 = particle1;
 			this.Particle2 = particle2;

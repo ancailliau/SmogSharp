@@ -31,65 +31,99 @@ using Smog.Physics.Force;
 
 namespace Smog.Layout
 {
-	public class ForceBasedLayout : PhysicalLayout
+	
+	/// <summary>
+	/// 	Represents a layout computed by simulating forces applied
+	/// 	on particles by a set of forces. <code>N</code> is the type
+	/// 	attached to particles, and <code>E</code> is the type attached
+	/// 	to springs.
+	/// </summary>
+	public class ForceBasedLayout<N, E> : PhysicalLayout<N, E>
+		where N: Node
+		where E: Edge<N>
 	{
 		
-		public List<Particle> Particles  {
+		/// <summary>
+		/// 	The list of particles.
+		/// </summary>
+		public List<Particle<N>> Particles  {
 			get;
 			private set;
 		}
 		
-		public List<Spring> Springs  {
+		/// <summary>
+		/// 	The list of springs.
+		/// </summary>
+		public List<Spring<N, E>> Springs  {
 			get;
 			private set;
 		}
 		
+		/// <summary>
+		/// 	The list of forces acting for the simulation.
+		/// </summary>
 		public List<Force> Forces  {
 			get;
 			private set;
 		}
 		
+		/// <summary>
+		/// 	The threshold of energy indicating when the simulation ends.
+		/// </summary>
 		public double Threshold  {
 			get;
 			private set;
 		}
 		
+		/// <summary>
+		/// 	Creates a new layout with no particles, no springs and no forces.
+		/// </summary>
 		public ForceBasedLayout ()
 		{
-			Particles = new List<Particle>();
-			Springs = new List<Spring>();
+			Particles = new List<Particle<N>>();
+			Springs = new List<Spring<N,E>>();
 			Forces = new List<Force>();
 			Threshold = .1;
 		}
 		
+		/// <summary>
+		/// 	Creates a new layout with no particles, no springs and no force.
+		/// </summary>
+		/// <param name="threshold">
+		/// 	A <see cref="System.Double"/> representing the threshold.
+		/// </param>
 		public ForceBasedLayout (double threshold)
-			: base()
+			: this()
 		{
 			this.Threshold = threshold;
 		}
 
-		
-		public void Init (Utils.Node[] nodes, Utils.Edge[] edges)
+		public void Init (N[] nodes, E[] edges)
 		{
-			Dictionary<Node, Particle> attachedParticle = new Dictionary<Node, Particle>();
+			// Reset the nodes and particles
+			Particles = new List<Particle<N>>();
+			Springs = new List<Spring<N,E>>();
+			
+			Dictionary<N, Particle<N>> attachedParticle = new Dictionary<N, Particle<N>>();
 			
 			// Creates a particle for each node
 			Random r = new Random();
-			foreach (Node n in nodes) {
-				Particle particle = new Particle(r.NextDouble () - .5, r.NextDouble () - .5, 0, 0);
+			foreach(N n in nodes) {
+				Particle<N> particle = new Particle<N>(r.NextDouble () - .5, r.NextDouble () - .5, 0, 0)
+					{ Value = n };
 				Particles.Add(particle);
 				attachedParticle.Add(n, particle);
 			}
 			
 			// Creates a spring for each edge
-			foreach (Edge e in edges) {
-				Springs.Add(new Spring(attachedParticle[e.Head], attachedParticle[e.Tail]));
+			foreach(E e in edges) {
+				Springs.Add(new Spring<N, E>(attachedParticle[e.Head], attachedParticle[e.Tail])
+					{ Value = e });
 			}
 		}
 
 		public void Terminate ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		public bool ComputeNextStep (double timeStep)
@@ -99,7 +133,7 @@ namespace Smog.Layout
 			}
 			
 			double energy = 0;
-			foreach (Particle p in Particles) {
+			foreach (Particle<N> p in Particles) {
 				// Update velocities of particles
 				p.XSpeed = (p.XSpeed + timeStep * p.XForce);
 				p.YSpeed = (p.YSpeed + timeStep * p.YForce);

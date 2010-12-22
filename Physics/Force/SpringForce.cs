@@ -25,18 +25,20 @@
 // THE SOFTWARE.
 using System;
 using Smog.Layout;
+using Smog.Utils;
 namespace Smog.Physics.Force
 {
-	public class SpringForce
+	public class SpringForce : Force
 	{
 		public SpringForce ()
 		{
 		}
 		
-		public void Apply (PhysicalLayout l)
+		public void Apply<S, T> (PhysicalLayout<S, T> l)
+			where S: Node where T: Edge<S>
 		{
 			
-			foreach (Spring s in l.Springs) {
+			foreach (Spring<S, T> s in l.Springs) {
 			
 				// Distance between the two particles
 				double xdistance = (s.Particle1.X - s.Particle2.X);

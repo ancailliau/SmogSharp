@@ -25,30 +25,107 @@
 // THE SOFTWARE.
 using System;
 using Smog.Layout;
+using Smog.Utils;
+using System.Collections.Generic;
 namespace Smog
 {
-	public class Simulation
+		
+	public delegate void StartedEventHandler(object sender, EventArgs e);
+	public delegate void StoppedEventHandler(object sender, EventArgs e);
+	public delegate void InterruptedEventHandler(object sender, EventArgs e);
+	public delegate void ChangedEventHandler(object sender, EventArgs e);
+	
+	public class Simulation<S, T>
+		where S: Node where T: Edge<S>
 	{
+		
+		public List<T> Edges  {
+			get;
+			private set;
+		}
+		
+		public List<S> Nodes {
+			get;
+			private set;
+		}
+		
+		public event StartedEventHandler Started;
+		public event StoppedEventHandler Stopped;
+		public event InterruptedEventHandler Interrupted;
+		public event ChangedEventHandler Changed;
+		
+		protected virtual void OnStarted(EventArgs e)
+		{
+			if (Started != null) {
+				Started(this, e);
+			}
+		}
+				
+		protected virtual void OnStopped(EventArgs e)
+		{
+			if (Stopped != null) {
+				Stopped(this, e);
+			}
+		}		
+		
+		protected virtual void OnInterrupted(EventArgs e)
+		{
+			if (Interrupted != null) {
+				Interrupted(this, e);
+			}
+		}
+		
+    protected virtual void OnChanged(EventArgs e) 
+    {
+      if (Changed != null) {
+          Changed(this, e);
+			}
+    }
+		
 		
 		public double TimeStep  {
 			get;
 			private set;
 		}
 		
-		public GraphLayout Layout {
+		public GraphLayout<S, T> Layout {
 			get;
 			private set;
 		}
 		
-		public Simulation (GraphLayout layout)
+		public Simulation (GraphLayout<S, T> layout)
 		{
 			Layout = layout;
 			TimeStep = 1;
+			Nodes = new List<S>();
+			Edges = new List<T>();
 		}
 		
-		public void Run()
+		public void Init ()
 		{
-			while(Layout.ComputeNextStep(TimeStep)) {}
+			Layout.Init(Nodes.ToArray(), Edges.ToArray());
+			OnStarted(EventArgs.Empty);
+		}
+		
+		public void Terminate ()
+		{
+			Layout.Terminate();
+			OnStopped(EventArgs.Empty);
+		}
+		
+		public bool StepRun ()
+		{
+			bool result = Layout.ComputeNextStep(TimeStep);
+			OnChanged(EventArgs.Empty);
+			return result;
+		}
+		
+		public void BatchRun()
+		{
+			Init();
+			while(StepRun()) {
+			}
+			Terminate();
 		}
 		
 	}

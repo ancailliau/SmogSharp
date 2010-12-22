@@ -26,14 +26,16 @@
 using System;
 using System.Collections.Generic;
 using Smog.Physics;
+using Smog.Utils;
 namespace Smog.Layout
 {
-	public interface PhysicalLayout : GraphLayout
+	public interface PhysicalLayout<S, T> : GraphLayout<S, T>
+		where S: Node where T: Edge<S>
 	{
 		
-		List<Spring> Springs { get ; }
+		List<Spring<S, T>> Springs { get ; }
 		
-		List<Particle> Particles { get; }
+		List<Particle<S>> Particles { get; }
 		
 	}
 }

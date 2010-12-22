@@ -25,11 +25,13 @@
 // THE SOFTWARE.
 using System;
 using Smog.Layout;
+using Smog.Utils;
 namespace Smog.Physics.Force
 {
 	public interface Force
 	{
-		void Apply(PhysicalLayout layout);
+		void Apply<S, T> (PhysicalLayout<S, T> layout)
+			where S: Node where T: Edge<S>;
 	}
 }
 
