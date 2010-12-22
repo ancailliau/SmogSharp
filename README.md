@@ -1,10 +1,14 @@
 # Smog#
 
-* http://github.com/ancailliau/smog
+* [[http://github.com/ancailliau/smog]]
 
 ## Description
 	
 	Smog# aims at providing reusable facilities to draw graph by proposing well-documented API.
+	
+	An additionnal objective of the project is to make experimentation with other layouts
+	possible and easy. Trial and error is sometimes the best way to find **the** right graph.
+	With a common API, such process is easy to perform.
 
 	The project is at its very first steps. The API is therefore highly unstable and more features are to come.
 
