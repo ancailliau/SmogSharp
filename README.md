@@ -1,6 +1,6 @@
 # Smog#
 
-* [[http://github.com/ancailliau/smog]]
+* [Project Source](http://github.com/ancailliau/smog)
 
 ## Description
 	
