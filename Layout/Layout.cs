@@ -1,5 +1,5 @@
 // 
-// Algorithm.cs
+// Layout.cs
 //  
 // Author:
 //       Antoine Cailliau <antoine.cailliau@uclouvain.be>
@@ -25,57 +25,45 @@
 // THE SOFTWARE.
 
 using System;
+using Smog.Utils;
 
-namespace Smog
+namespace Smog.Layout
 {
 	
 	/// <summary>
 	/// 	Represents an algorithm to draw graph
 	/// </summary>
-	public interface Algorithm
-	{		
+	public interface Layout
+	{
+	
+		/// <summary>
+		/// 	Creates a new layout for the given nodes and edges.
+		/// </summary>
+		/// <param name="nodes">
+		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
+		/// </param>
+		/// <param name="edges">
+		/// 	A <see cref="Edge[]"/> representing the edges of the graph.
+		/// </param>
+		void Layout(Node[] nodes, Edge[] edges);
 		
 		/// <summary>
 		/// 	Initializes the algorithm by setting proper value to nodes and
 		/// 	springs for the algorithm to start.
 		/// </summary>
-		/// <param name="nodes">
-		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
-		/// </param>
-		/// <param name="springs">
-		/// 	A <see cref="Spring[]"/> representing the springs fo the graph.
-		/// </param>
-		void Init (Node[] nodes, Spring[] springs);
+		void Init ();
 		
 		/// <summary>
 		/// 	Closes
 		/// 	<code>ComputeNextStep</code> can't be called afterwards.
 		/// </summary>
-		/// <param name="nodes">
-		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
-		/// </param>
-		/// <param name="springs">
-		/// 	A <see cref="Spring[]"/> representing the springs of the graph.
-		/// </param>
-		void Terminate (Node[] nodes, Spring[] springs);
+		void Terminate ();
 		
 		/// <summary>
 		/// 	Computes the next step of the simulation. The method returns
 		/// 	whether there are more steps to do.
 		/// </summary>
-		/// <param name="nodes">
-		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
-		/// </param>
-		/// <param name="springs">
-		/// 	A <see cref="Spring[]"/> representing the springs of the graph.
-		/// </param>
-		/// <returns>
-		/// 	A <see cref="System.Boolean"/> representing wheter there are more
-		/// 	steps to do.
-		/// </returns>
-		bool ComputeNextStep(Node[] nodes, Spring[] springs);
-		
-		
+		bool ComputeNextStep();	
 		
 	}
 }

@@ -32,13 +32,13 @@ namespace Smog.Utils
 	/// <summary>
 	/// 	Represents a node in the graph.
 	/// </summary>
-	public class Node<T>
+	public class Node
 	{
 		
 		/// <summary>
 		/// 	The value contained in the node.
 		/// </summary>
-		public T Name { get ; set ; }
+		public Object Value { get ; set ; }
 		
 		/// <summary>
 		/// 	The weight of the node.
@@ -48,27 +48,26 @@ namespace Smog.Utils
 		/// <summary>
 		/// 	Creates a new node for the given value.
 		/// </summary>
-		/// <param name="name">
+		/// <param name="val">
 		/// 	A <see cref="T"/> representing the value of the node.
 		/// </param>
-		public Node (T name)
+		public Node (Object val)
 		{
-			Name = name;
-			Weight = weight;
+			Value = val;
 		}
 		
 		/// <summary>
 		/// 	Creates a new node for the given value and given weight.
 		/// </summary>
-		/// <param name="name">
+		/// <param name="val">
 		/// 	A <see cref="T"/> representing the value of the node.
 		/// </param>
 		/// <param name="weight">
 		/// 	A <see cref="System.Double"/> representing the weight of the node.
 		/// </param>
-		public Node (T name, double weight)
+		public Node (Object val, double weight)
 		{
-			Name = name;
+			Value = val;
 			Weight = weight;
 		}
 	}
