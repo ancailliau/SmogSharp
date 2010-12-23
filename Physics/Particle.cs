@@ -88,7 +88,7 @@ namespace Smog.Physics
 		/// </summary>
 		public double Mass  {
 			get;
-			set;
+			private set;
 		}
 		
 		/// <summary>
@@ -116,7 +116,7 @@ namespace Smog.Physics
 		/// 	and the given mass.
 		/// </summary>
 		/// <param name="mass">
-		/// 	A <see cref="System.Double"/> representing the mass.
+		/// 	A <see cref="T:System.Double"/> representing the mass.
 		/// </param>
 		public Particle (double mass)
 		{
@@ -128,10 +128,10 @@ namespace Smog.Physics
 		///   null speed and the given mass.
 		/// </summary>
 		/// <param name="x">
-		/// 	A <see cref="System.Double"/> representing the x-coordinate
+		/// 	A <see cref="T:System.Double"/> representing the x-coordinate
 		/// </param>
 		/// <param name="y">
-		/// 	A <see cref="System.Double"/> representing the y-coordinate
+		/// 	A <see cref="T:System.Double"/> representing the y-coordinate
 		/// </param>
 		public Particle (double x, double y)
 			: this()
@@ -145,13 +145,13 @@ namespace Smog.Physics
 		/// 	of null speed and with given mass.
 		/// </summary>
 		/// <param name="x">
-		/// 	A <see cref="System.Double"/> representing the x-coordinate
+		/// 	A <see cref="T:System.Double"/> representing the x-coordinate
 		/// </param>
 		/// <param name="y">
-		/// 	A <see cref="System.Double"/> representing the y-coordinate
+		/// 	A <see cref="T:System.Double"/> representing the y-coordinate
 		/// </param>
 		/// <param name="mass">
-		/// 	A <see cref="System.Double"/> representing the mass
+		/// 	A <see cref="T:System.Double"/> representing the mass
 		/// </param>
 		public Particle (double x, double y, double mass)
 			: this(x, y)
@@ -164,16 +164,16 @@ namespace Smog.Physics
 		/// 	of given speed and of unitary mass.
 		/// </summary>
 		/// <param name="x">
-		/// 	A <see cref="System.Double"/> representing the x-coordinate.
+		/// 	A <see cref="T:System.Double"/> representing the x-coordinate.
 		/// </param>
 		/// <param name="y">
-		/// 	A <see cref="System.Double"/> representing the y-coordinate.
+		/// 	A <see cref="T:System.Double"/> representing the y-coordinate.
 		/// </param>
 		/// <param name="xSpeed">
-		/// 	A <see cref="System.Double"/> representing the speed along the x-axis.
+		/// 	A <see cref="T:System.Double"/> representing the speed along the x-axis.
 		/// </param>
 		/// <param name="ySpeed">
-		/// 	A <see cref="System.Double"/> representing the speed along the y-axis.
+		/// 	A <see cref="T:System.Double"/> representing the speed along the y-axis.
 		/// </param>
 		public Particle (double x, double y, double xSpeed, double ySpeed)
 			: this(x, y)
@@ -187,21 +187,21 @@ namespace Smog.Physics
 		/// 	speed given and of given mass.
 		/// </summary>
 		/// <param name="x">
-		/// 	A <see cref="System.Double"/> representing the x-coordinate.
+		/// 	A <see cref="T:System.Double"/> representing the x-coordinate.
 		/// </param>
 		/// <param name="y">
-		/// 	A <see cref="System.Double"/> representing the y-coordinate.
+		/// 	A <see cref="T:System.Double"/> representing the y-coordinate.
 		/// </param>
 		/// <param name="xSpeed">
-		/// 	A <see cref="System.Double"/> representing the speed along the 
+		/// 	A <see cref="T:System.Double"/> representing the speed along the 
 		/// 	x-axis.
 		/// </param>
 		/// <param name="ySpeed">
-		/// 	A <see cref="System.Double"/> representing the speed along the
+		/// 	A <see cref="T:System.Double"/> representing the speed along the
 		/// 	y-axis.
 		/// </param>
 		/// <param name="mass">
-		/// 	A <see cref="System.Double"/> representing the mass of the
+		/// 	A <see cref="T:System.Double"/> representing the mass of the
 		/// 	particle.
 		/// </param>
 		public Particle (double x, double y, double xSpeed, double ySpeed, double mass)

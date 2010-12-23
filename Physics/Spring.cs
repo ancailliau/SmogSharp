@@ -88,10 +88,10 @@ namespace Smog.Physics
 		/// 	unitary length and strenght.
 		/// </summary>
 		/// <param name="p1">
-		/// A <see cref="Particle"/> representing one particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing one particle.
 		/// </param>
 		/// <param name="p2">
-		/// A <see cref="Particle"/> representing the other particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing the other particle.
 		/// </param>
 		public Spring (Particle<S> p1, Particle<S> p2)
 		{
@@ -99,7 +99,7 @@ namespace Smog.Physics
 			Particle2 = p2;
 			Strenght = 1;
 			Length = 1;
-			Damping = Length / 10;
+			Damping = 1;//Length / 10;
 		}
 		
 		/// <summary>
@@ -107,13 +107,13 @@ namespace Smog.Physics
 		///		length and given strenght.
 		/// </summary>
 		/// <param name="particle1">
-		/// 	A <see cref="Particle"/> representing one particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing one particle.
 		/// </param>
 		/// <param name="particle2">
-		/// 	A <see cref="Particle"/> representing the other particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing the other particle.
 		/// </param>
 		/// <param name="strenght">
-		/// 	A <see cref="System.Double"/> representing the strenght of the
+		/// 	A <see cref="T:System.Double"/> representing the strenght of the
 		/// 	spring.
 		/// </param>
 		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght)
@@ -127,17 +127,17 @@ namespace Smog.Physics
 		/// 	and strenght.
 		/// </summary>
 		/// <param name="particle1">
-		/// 	A <see cref="Particle"/> representing one particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing one particle.
 		/// </param>
 		/// <param name="particle2">
-		/// 	A <see cref="Particle"/> representing the other particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing the other particle.
 		/// </param>
 		/// <param name="strenght">
-		/// 	A <see cref="System.Double"/> representing the strenght of the
+		/// 	A <see cref="T:System.Double"/> representing the strenght of the
 		/// 	spring.
 		/// </param>
 		/// <param name="length">
-		/// 	A <see cref="System.Double"/> representing the length of the
+		/// 	A <see cref="T:System.Double"/> representing the length of the
 		/// 	spring.
 		/// </param>
 		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght, double length)
@@ -152,21 +152,21 @@ namespace Smog.Physics
 		/// 	and strenght. The damping factor is equal to the given one.
 		/// </summary>
 		/// <param name="particle1">
-		/// 	A <see cref="Particle"/> representing one particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing one particle.
 		/// </param>
 		/// <param name="particle2">
-		/// 	A <see cref="Particle"/> representing the other particle.
+		/// 	A <see cref="T:Smog.Particle"/> representing the other particle.
 		/// </param>
 		/// <param name="strenght">
-		/// 	A <see cref="System.Double"/> representing the strenght of the
+		/// 	A <see cref="T:System.Double"/> representing the strenght of the
 		/// 	spring.
 		/// </param>
 		/// <param name="length">
-		/// 	A <see cref="System.Double"/> representing the length of the
+		/// 	A <see cref="T:System.Double"/> representing the length of the
 		/// 	spring.
 		/// </param>
 		/// <param name="damping">
-		/// 	A <see cref="System.Double"/> representing the damping factor of
+		/// 	A <see cref="T:System.Double"/> representing the damping factor of
 		/// 	the spring.
 		/// </param>
 		public Spring (Particle<S> particle1, Particle<S> particle2, double strenght, double length, double damping)
