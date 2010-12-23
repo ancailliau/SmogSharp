@@ -33,7 +33,7 @@ namespace Smog.Layout
 	/// <summary>
 	/// 	Represents an algorithm to draw graph
 	/// </summary>
-	public interface GraphLayout<S, T> where S: Node where T: Edge<S>
+	public interface GraphLayout<N, E> where N: Node where E: Edge<N>
 	{
 		
 		/// <summary>
@@ -41,15 +41,15 @@ namespace Smog.Layout
 		/// 	springs for the algorithm to start.
 		/// </summary>
 		/// <param name="nodes">
-		/// 	A <see cref="Node[]"/> representing the nodes of the graph.
+		/// A <see cref="N[]"/> representing the nodes of the graph.
 		/// </param>
 		/// <param name="edges">
-		/// 	A <see cref="Edge[]"/> representing the edges of the graph.
+		/// A <see cref="E[]"/> representing the edges of the graph
 		/// </param>
-		void Init (S[] nodes, T[] edges);
+		void Init (N[] nodes, E[] edges);
 		
 		/// <summary>
-		/// 	Closes
+		/// 	Terminates the algorithm.
 		/// 	<code>ComputeNextStep</code> can't be called afterwards.
 		/// </summary>
 		void Terminate ();
