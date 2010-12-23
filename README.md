@@ -16,6 +16,54 @@ The project is at its very first steps. The API is therefore highly unstable and
 
 * Mono >= 2.8.1
 
+## Examples of use
+
+### Basic physical simulation
+
+	var layout = new ForceBasedLayout<Node, Edge<Node>>();
+	layout.Forces.Add(new SpringForce());
+	
+	var visualisation = new Visualisation<Node, Edge<Node>>(layout);
+	
+	Node[] nodes = {
+		new Node("node0"), new Node("node1"), new Node("node2"), new Node("node3"),
+		new Node("node4"), new Node("node5"), new Node("node6")
+	};
+	
+	Edge<Node>[] edges = {
+		new Edge<Node>(nodes[0], nodes[1]), new Edge<Node>(nodes[1], nodes[2]),
+		new Edge<Node>(nodes[2], nodes[3]),	new Edge<Node>(nodes[3], nodes[4]),
+		new Edge<Node>(nodes[4], nodes[5]),	new Edge<Node>(nodes[5], nodes[6]),
+		new Edge<Node>(nodes[6], nodes[0])
+	};
+	
+	foreach (Node n in nodes) {
+		visualisation.Nodes.Add(n);
+	}
+	
+	foreach (Edge<Node> e in edges) {
+		visualisation.Edges.Add(e);
+	}
+	
+	visualisation.BatchRun();
+
+### Event handlers
+
+In addition to the previous code, one can attach event handlers to act upon
+visualition changes.
+	
+	visualisation.Started += delegate(object sender, EventArgs e) {
+		Console.WriteLine("Simulation Started");
+	};
+	
+	visualisation.Stopped += delegate(object sender, EventArgs e) {
+		Console.WriteLine("Simulation Stopped");
+	};
+	
+	visualisation.Changed += delegate(object sender, EventArgs e) {
+		Console.WriteLine("Simulation changed");
+	};
+
 ## Licence
 
     (The MIT License)
