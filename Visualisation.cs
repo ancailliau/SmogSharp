@@ -35,16 +35,16 @@ namespace Smog
 	public delegate void InterruptedEventHandler(object sender, EventArgs e);
 	public delegate void ChangedEventHandler(object sender, EventArgs e);
 	
-	public class Simulation<S, T>
-		where S: Node where T: Edge<S>
+	public class Visualisation<N, E>
+		where N: Node where E: Edge<N>
 	{
 		
-		public List<T> Edges  {
+		public List<E> Edges  {
 			get;
 			private set;
 		}
 		
-		public List<S> Nodes {
+		public List<N> Nodes {
 			get;
 			private set;
 		}
@@ -88,17 +88,17 @@ namespace Smog
 			private set;
 		}
 		
-		public GraphLayout<S, T> Layout {
+		public GraphLayout<N, E> Layout {
 			get;
 			private set;
 		}
 		
-		public Simulation (GraphLayout<S, T> layout)
+		public Visualisation (GraphLayout<N, E> layout)
 		{
 			Layout = layout;
 			TimeStep = 1;
-			Nodes = new List<S>();
-			Edges = new List<T>();
+			Nodes = new List<N>();
+			Edges = new List<E>();
 		}
 		
 		public void Init ()
