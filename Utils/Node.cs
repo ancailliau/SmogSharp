@@ -49,7 +49,7 @@ namespace Smog.Utils
 		/// 	Creates a new node for the given value.
 		/// </summary>
 		/// <param name="val">
-		/// 	A <see cref="T"/> representing the value of the node.
+		/// 	A <see cref="T:System.Object"/> representing the value of the node.
 		/// </param>
 		public Node (Object val)
 		{
@@ -60,10 +60,10 @@ namespace Smog.Utils
 		/// 	Creates a new node for the given value and given weight.
 		/// </summary>
 		/// <param name="val">
-		/// 	A <see cref="T"/> representing the value of the node.
+		/// 	A <see cref="T:System.Object"/> representing the value of the node.
 		/// </param>
 		/// <param name="weight">
-		/// 	A <see cref="System.Double"/> representing the weight of the node.
+		/// 	A <see cref="T:System.Double"/> representing the weight of the node.
 		/// </param>
 		public Node (Object val, double weight)
 		{

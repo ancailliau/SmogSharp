@@ -51,6 +51,15 @@ namespace Smog.Utils
 			private set;
 		}
 		
+		/// <summary>
+		/// 	Creates a new edge from <c>head</c> to <c>tail</c>.
+		/// </summary>
+		/// <param name="head">
+		/// 	A <see cref="S"/> representing the head of the edge.
+		/// </param>
+		/// <param name="tail">
+		/// 	A <see cref="S"/> representing the tail of the edge.
+		/// </param>
 		public Edge (S head, S tail)
 		{
 			this.Head = head;
