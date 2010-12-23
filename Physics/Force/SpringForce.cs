@@ -44,9 +44,10 @@ namespace Smog.Physics.Force
 				double xdistance = (s.Particle1.X - s.Particle2.X);
 				double ydistance = (s.Particle1.Y - s.Particle2.Y);
 				double distance = Math.Sqrt (xdistance * xdistance + ydistance * ydistance);
+				distance = Math.Max(1, distance);
 			
 				// Force of the spring on the particles
-				double force = s.Strenght * (distance - s.Length) / distance;
+				double force = - 1 * s.Strenght * (distance - s.Length) / distance;
 			
 				// Add force to particles
 				s.Particle1.XForce += - force * xdistance;
@@ -54,12 +55,8 @@ namespace Smog.Physics.Force
 				
 				s.Particle2.XForce -= - force * xdistance;
 				s.Particle2.YForce -= - force * ydistance;
-				
 			}
-			
-			
 		}
-		
 	}
 }
 
