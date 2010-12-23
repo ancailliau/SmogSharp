@@ -1,4 +1,4 @@
-# Smog#
+# Smog\#
 
 * [Project Source](http://github.com/ancailliau/smog)
 
