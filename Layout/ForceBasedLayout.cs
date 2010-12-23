@@ -44,7 +44,93 @@ namespace Smog.Layout
 	{
 		
 		/// <summary>
-		/// 	The list of particles.
+		/// 	Whether bounds are enforced.
+		/// </summary>
+		private bool enforceBounds = false;
+		
+		/// <summary>
+		/// 	Wheter bounds are enforced. It is not possible
+		///  	to enforce bounds without proper bounds set.
+		/// </summary>
+		public bool EnforceBounds  {
+			get { return enforceBounds; } 
+			set { 
+				if (value) {
+					enforceBounds = topBound > bottomBound & rightBound > leftBound;
+				} else {
+					enforceBounds = false;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// 	The top bound.
+		/// </summary>
+		private double topBound = 0;
+		
+		/// <summary>
+		/// 	The bottom bound.
+		/// </summary>
+		private double bottomBound = 0;
+		
+		/// <summary>
+		/// 	The left bound.
+		/// </summary>
+		private double leftBound = 0;
+		
+		/// <summary>
+		/// 	The right bound.
+		/// </summary>
+		private double rightBound = 0;
+		
+		/// <summary>
+		/// 	The bounds of the layout. Bounds are represented clockwise.
+		/// 	There are 4 ways to set bounds:
+		/// 	<list type="bullet">
+		/// 		<item><code>{ top, right, bottom, left }</code></item>
+		/// 		<item><code>{ top, right and left, bottom }</code></item>
+		/// 		<item><code>{ top and bottom, right and left }</code></item>
+		/// 		<item><code>{ top and right and bottom and left }</code></item>
+		/// 	</list>
+		/// 	When setting bounds the bounds are automatically enforced
+		/// 	if valid.
+		/// </summary>
+		public double[] Bounds {
+			get { return new double[] { topBound, rightBound, bottomBound, leftBound }; }
+			set { 
+				EnforceBounds = true;
+				if (value.Length == 4) {
+					topBound = value[0];
+					rightBound = value[1];
+					bottomBound = value[2];
+					leftBound = value[3];
+					
+				} else if (value.Length == 3) {
+					topBound = value[0];
+					rightBound = value[1];
+					bottomBound = value[2];
+					leftBound = value[1];
+					
+				} else if (value.Length == 2) {
+					topBound = value[0];
+					rightBound = value[1];
+					bottomBound = value[0];
+					leftBound = value[1];
+					
+				} else if (value.Length == 1) {
+					topBound = value[0];
+					rightBound = value[0];
+					bottomBound = value[0];
+					leftBound = value[0];
+					
+				} else {
+					EnforceBounds = false;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// 	The list of particles. See <see cref="P:Smog.PhysicalLayout.Particles"/>.
 		/// </summary>
 		public List<Particle<N>> Particles  {
 			get;
@@ -52,7 +138,7 @@ namespace Smog.Layout
 		}
 		
 		/// <summary>
-		/// 	The list of springs.
+		/// 	The list of springs. See <see cref="P:Smog.PhysicalLayout.Springs"/>.
 		/// </summary>
 		public List<Spring<N, E>> Springs  {
 			get;
@@ -76,6 +162,14 @@ namespace Smog.Layout
 		}
 		
 		/// <summary>
+		/// 	The damping factor of the graph.
+		/// </summary>
+		public double Damping  {
+			get;
+			private set;
+		}
+		
+		/// <summary>
 		/// 	Creates a new layout with no particles, no springs and no forces.
 		/// </summary>
 		public ForceBasedLayout ()
@@ -83,21 +177,30 @@ namespace Smog.Layout
 			Particles = new List<Particle<N>>();
 			Springs = new List<Spring<N,E>>();
 			Forces = new List<Force>();
-			Threshold = .1;
+			Threshold = .1; Damping = .9;
 		}
 		
 		/// <summary>
 		/// 	Creates a new layout with no particles, no springs and no force.
 		/// </summary>
 		/// <param name="threshold">
-		/// 	A <see cref="System.Double"/> representing the threshold.
+		/// 	A <see cref="T:System.Double"/> representing the threshold.
 		/// </param>
 		public ForceBasedLayout (double threshold)
 			: this()
 		{
 			this.Threshold = threshold;
 		}
-
+		
+		/// <summary>
+		/// 	See <see cref="M:Smog.PhysicalLayout.Init(N[],E[])"/>
+		/// </summary>
+		/// <param name="nodes">
+		/// 	A <see cref="N[]"/> represents the nodes of the graph.
+		/// </param>
+		/// <param name="edges">
+		/// 	A <see cref="E[]"/> represents the edges of the graph.
+		/// </param>
 		public void Init (N[] nodes, E[] edges)
 		{
 			// Reset the nodes and particles
@@ -109,8 +212,7 @@ namespace Smog.Layout
 			// Creates a particle for each node
 			Random r = new Random();
 			foreach(N n in nodes) {
-				Particle<N> particle = new Particle<N>(r.NextDouble () - .5, r.NextDouble () - .5, 0, 0)
-					{ Value = n };
+				Particle<N> particle = new Particle<N>(r.NextDouble()-.5, r.NextDouble()-.5) { Value = n };
 				Particles.Add(particle);
 				attachedParticle.Add(n, particle);
 			}
@@ -121,31 +223,62 @@ namespace Smog.Layout
 					{ Value = e });
 			}
 		}
-
+		
+		/// <summary>
+		/// 	See <see cref="M:Smog.PhysicalLayout.Terminate()"/>.
+		/// </summary>
 		public void Terminate ()
 		{
 		}
-
+		
+		/// <summary>
+		/// 	See <see cref="M:Smog.PhysicalLayout.ComputeNextStep(int)"/>.
+		/// </summary>
+		/// <param name="timeStep">
+		/// 	A <see cref="T:System.Double"/> representing the timestep
+		/// </param>
+		/// <returns>
+		/// 	A <see cref="T:System.Boolean"/> representing wheter the are
+		/// 	more steps.
+		/// </returns>
 		public bool ComputeNextStep (double timeStep)
-		{			
+		{	
 			foreach (Force f in Forces) {
 				f.Apply(this);
 			}
 			
-			double energy = 0;
+			
 			foreach (Particle<N> p in Particles) {
-				// Update velocities of particles
-				p.XSpeed = (p.XSpeed + timeStep * p.XForce);
-				p.YSpeed = (p.YSpeed + timeStep * p.YForce);
-			
-				// Update position of nodes
-				p.X = p.X + p.XSpeed * timeStep;
-				p.Y = p.Y + p.YSpeed * timeStep;
-			
-				energy += p.Mass * Math.Sqrt (p.XSpeed * p.XSpeed + p.YSpeed * p.YSpeed);
+				double ax = p.XForce / p.Mass;
+				double ay = p.YForce / p.Mass;
+				
+				p.XSpeed = (p.XSpeed + ax * timeStep * timeStep / 2) * Damping;
+				p.YSpeed = (p.YSpeed + ay * timeStep * timeStep / 2) * Damping;
+				
+				p.X += p.XSpeed * timeStep;
+				p.Y += p.YSpeed * timeStep;
+				
+				p.XForce = 0; p.YForce = 0;
 			}
 			
-			return energy > Threshold;
+			// Enforce bounds
+			if (EnforceBounds) {
+				foreach (Particle<N> p in Particles) {
+					p.X = Math.Min(topBound, p.X);
+					p.Y = Math.Min(rightBound, p.Y);
+					p.X = Math.Max(bottomBound, p.X);
+					p.Y = Math.Max(leftBound, p.Y);
+				}
+			}
+			
+			// Compute energy
+			double kineticEnergy = 0;
+			foreach (Particle<N> p in Particles) {
+				double speed2 = p.XSpeed * p.XSpeed + p.YSpeed * p.YSpeed;
+				kineticEnergy += p.Mass * speed2 / 2;
+			}
+			
+			return kineticEnergy > Threshold;
 		}
 		
 	}

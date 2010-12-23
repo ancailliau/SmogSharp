@@ -1,5 +1,5 @@
 // 
-// Force.cs
+// RepulsionForce.cs
 //  
 // Author:
 //       Antoine Cailliau <antoine.cailliau@uclouvain.be>
@@ -24,23 +24,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Smog.Layout;
 using Smog.Utils;
 namespace Smog.Physics.Force
 {
 	/// <summary>
-	/// 	Represents a force for a physical simulation
+	/// 	Represents the force of repulsion between particles. This
+	/// 	is simulating the coulomb force.
 	/// </summary>
-	public interface Force
+	public class RepulsionForce : Force
 	{
 		/// <summary>
-		/// 	Apply the force on the element of the layout.
+		/// 	See <see cref="M:Smog.Force.Apply(PhysicalLayout)"/>.
 		/// </summary>
-		/// <param name="layout">
-		/// 	A <see cref="T:PhysicalLayout"/> represents the layout.
+		/// <param name="l">
+		/// 	A <see cref="T:Layout.PhysicalLayout"/> representing
+		/// 	the layout.
 		/// </param>
-		void Apply<S, T> (PhysicalLayout<S, T> layout)
-			where S: Node where T: Edge<S>;
+		public void Apply<S, T> (Layout.PhysicalLayout<S, T> l)
+			where S: Node where T: Edge<S>
+		{
+			foreach (Particle<S> p in l.Particles) {
+				foreach (Particle<S> p2 in l.Particles) {
+					if (p != p2) {
+						double dx = p.X - p2.X;
+						double dy = p.Y - p2.Y;
+						double d = Math.Sqrt(dx*dx + dy*dy);
+						double dd = d < 1 ? 1 : d;
+						double ke = .05;
+						double q1 = 1;
+						double q2 = 1;
+						double F = (ke * q1 * q2) / dd * dd;
+						
+						p.XForce += F * dx / dd;
+						p.YForce += F * dy / dd;
+					}
+				}
+			}
+		}
 	}
 }
 
