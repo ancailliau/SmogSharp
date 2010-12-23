@@ -1,2 +1,4 @@
 *.csproj
 bin
+
+/Smog#.pidb
