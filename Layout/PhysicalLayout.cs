@@ -29,13 +29,24 @@ using Smog.Physics;
 using Smog.Utils;
 namespace Smog.Layout
 {
-	public interface PhysicalLayout<S, T> : GraphLayout<S, T>
-		where S: Node where T: Edge<S>
+	
+	/// <summary>
+	/// 	Represents a physical layout, i.e. a layout computed by
+	/// 	simulating a physical system composed by particles and springs.
+	/// </summary>
+	public interface PhysicalLayout<N, E> : GraphLayout<N, E>
+		where N: Node where E: Edge<N>
 	{
 		
-		List<Spring<S, T>> Springs { get ; }
+		/// <summary>
+		/// 	The list of springs
+		/// </summary>
+		List<Spring<N, E>> Springs { get ; }
 		
-		List<Particle<S>> Particles { get; }
+		/// <summary>
+		/// 	The list of particles
+		/// </summary>
+		List<Particle<N>> Particles { get; }
 		
 	}
 }
